@@ -1,52 +1,55 @@
 {
-    "name": "typescript-api",
-    "version": "1.0.0",
-    "description": "Complete API built with Node.js and Typescript",
-    "main": "index.js",
-    "scripts": {
-        "build": "tsc",
-        "lint": "eslint ./src ./test --ext .ts",
-        "lint:fix": "eslint ./src ./test --ext .ts --fix",
-        "start": "yarn build && node dist/src/index.js",
-        "start:dev": "ts-node-dev 'src/index.ts'",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "test:functional": "jest --projects ./test --runInBand"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
-    },
-    "keywords": [
-        "node",
-        "nodejs",
-        "typescript",
-        "api"
-    ],
-    "author": "Waldemar Neto",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/waldemarnt/node-typescript-api/issues"
-    },
-    "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
-    "dependencies": {
-        "@overnightjs/core": "^1.7.4",
-        "body-parser": "^1.19.0",
-        "express": "^4.17.1",
-        "module-alias": "^2.2.2"
-    },
-    "devDependencies": {
-        "@types/express": "^4.17.7",
-        "@types/jest": "^26.0.9",
-        "@types/module-alias": "^2.0.0",
-        "@types/node": "^13.13.2",
-        "@types/supertest": "^2.0.10",
-        "@typescript-eslint/eslint-plugin": "^3.8.0",
-        "@typescript-eslint/parser": "^3.8.0",
-        "eslint": "^7.6.0",
-        "jest": "^26.2.2",
-        "supertest": "^4.0.2",
-        "ts-jest": "^26.1.4",
-        "ts-node-dev": "^1.0.0-pre.56",
-        "typescript": "^3.8.3"
-    }
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Complete API built with Node.js and Typescript",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint ./src ./test --ext .ts",
+    "lint:fix": "eslint ./src ./test --ext .ts --fix",
+    "start": "yarn build && node dist/src/index.js",
+    "start:dev": "ts-node-dev 'src/index.ts'",
+    "style": "prettier --check 'src/**/*.ts' 'test/**/*.test.ts'",
+    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.test.ts'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:functional": "jest --projects ./test --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Waldemar Neto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waldemarnt/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
+  "dependencies": {
+    "@overnightjs/core": "^1.7.4",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "module-alias": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.9",
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^13.13.2",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "jest": "^26.2.2",
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.1.4",
+    "ts-node-dev": "^1.0.0-pre.56",
+    "typescript": "^3.8.3"
+  }
 }
