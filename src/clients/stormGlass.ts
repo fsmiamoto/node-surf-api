@@ -1,4 +1,5 @@
 import { AxiosStatic } from "axios";
+import { InternalError } from "@src/util/internal-error";
 
 export interface StormGlassPointSource {
   [key: string]: number;
@@ -30,6 +31,22 @@ export interface ForecastPoint {
   windSpeed: number;
 }
 
+export class ClientRequestError extends InternalError {
+  constructor(message: string) {
+    const internalMessage =
+      "Unexpected error when trying to communicate to StormGlass";
+    super(`${internalMessage}: ${message}`);
+  }
+}
+
+export class StormGlassResponseError extends InternalError {
+  constructor(message: string) {
+    const internalMessage =
+      "Unexpected error returned by the StormGlass service";
+    super(`${internalMessage}: ${message}`);
+  }
+}
+
 export class StormGlass {
   readonly apiParams =
     "swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed";
@@ -38,16 +55,26 @@ export class StormGlass {
   constructor(protected request: AxiosStatic) {}
 
   public async fetchPoints(lat: number, lng: number) {
-    const response = await this.request.get<StormGlassForecastResponse>(
-      `https://api.stormglass.io/v2/weather/point?params=${this.apiParams}&source=${this.apiSource}&lat=${lat}&lng=${lng}`,
-      {
-        headers: {
-          Authorization: "token",
-        },
+    try {
+      const response = await this.request.get<StormGlassForecastResponse>(
+        `https://api.stormglass.io/v2/weather/point?params=${this.apiParams}&source=${this.apiSource}&lat=${lat}&lng=${lng}`,
+        {
+          headers: {
+            Authorization: "token",
+          },
+        }
+      );
+      return this.normalizeResponse(response.data);
+    } catch (err) {
+      if (err.response && err.response.status) {
+        throw new StormGlassResponseError(
+          `Error: ${JSON.stringify(err.response.data)} Code: ${
+            err.response.status
+          }`
+        );
       }
-    );
-
-    return this.normalizeResponse(response.data);
+      throw new ClientRequestError(err.message);
+    }
   }
 
   private normalizeResponse(points: StormGlassForecastResponse) {
