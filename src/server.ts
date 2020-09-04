@@ -1,6 +1,9 @@
 import "./util/module-alias";
 import { Server } from "@overnightjs/core";
+import { Application } from "express";
 import bodyParser from "body-parser";
+import * as database from "@src/database";
+
 import { ForecastController } from "./controllers/forecast";
 
 export class SetupServer extends Server {
@@ -8,9 +11,18 @@ export class SetupServer extends Server {
     super();
   }
 
-  public init() {
+  public async init(): Promise<void> {
     this.setupExpress();
     this.setupControllers();
+    await this.databaseSetup();
+  }
+
+  public getApp(): Application {
+    return this.app;
+  }
+
+  public async close(): Promise<void> {
+    await database.close();
   }
 
   private setupExpress() {
@@ -22,7 +34,7 @@ export class SetupServer extends Server {
     this.addControllers([forecastController]);
   }
 
-  public getApp() {
-    return this.app;
+  private async databaseSetup(): Promise<void> {
+    await database.connect();
   }
 }
