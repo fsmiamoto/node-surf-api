@@ -17,5 +17,27 @@ describe("Users functional test", () => {
       expect(response.status).toBe(201);
       expect(response.body).toEqual(expect.objectContaining(newUser));
     });
+
+    it("should return 422 when there is a validation error", async () => {
+      const newUser = {
+        email: "john@gmail.com",
+        password: "Password",
+      };
+
+      const response = await global.testRequest.post("/users").send(newUser);
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ code: 422 }));
+    });
+
+    it("should return 422 when the email already exists", async () => {
+      const newUser = {
+        email: "john@gmail.com",
+        password: "Password",
+      };
+
+      const response = await global.testRequest.post("/users").send(newUser);
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ code: 422 }));
+    });
   });
 });
